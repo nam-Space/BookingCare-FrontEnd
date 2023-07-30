@@ -6,6 +6,10 @@ import "./styles/styles.scss";
 import "swiper/swiper.min.css";
 import "swiper/swiper-bundle.min.css";
 
+import "react-image-lightbox/style.css";
+
+import "react-markdown-editor-lite/lib/index.css";
+
 import App from "./containers/App";
 import * as serviceWorker from "./serviceWorker";
 import IntlProviderWrapper from "./hoc/IntlProviderWrapper";

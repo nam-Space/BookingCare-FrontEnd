@@ -80,11 +80,12 @@ class ModalEditUser extends Component {
                     Edit User
                 </ModalHeader>
                 <ModalBody>
-                    <div className="modal-user-body">
-                        <div className="input-container">
+                    <div className="grid grid-cols-2 gap-[15px]">
+                        <div className="flex flex-col">
                             <label>Email</label>
                             <input
                                 type="text"
+                                className="rounded-[3px] h-[30px] border-[1px] border-gray-500 outline-none px-[10px]"
                                 onChange={(e) =>
                                     this.handleOnChangeInput(e, "email")
                                 }
@@ -92,10 +93,11 @@ class ModalEditUser extends Component {
                                 disabled
                             />
                         </div>
-                        <div className="input-container">
+                        <div className="flex flex-col">
                             <label>Password</label>
                             <input
                                 type="password"
+                                className="rounded-[3px] h-[30px] border-[1px] border-gray-500 outline-none px-[10px]"
                                 onChange={(e) =>
                                     this.handleOnChangeInput(e, "password")
                                 }
@@ -104,21 +106,23 @@ class ModalEditUser extends Component {
                             />
                         </div>
                     </div>
-                    <div className="modal-user-body mt-3">
-                        <div className="input-container">
+                    <div className="grid grid-cols-2 gap-[15px] mt-3">
+                        <div className="flex flex-col">
                             <label>First name</label>
                             <input
                                 type="text"
+                                className="rounded-[3px] h-[30px] border-[1px] border-gray-500 outline-none px-[10px]"
                                 onChange={(e) =>
                                     this.handleOnChangeInput(e, "firstName")
                                 }
                                 value={this.state.firstName}
                             />
                         </div>
-                        <div className="input-container">
+                        <div className="flex flex-col">
                             <label>Last name</label>
                             <input
                                 type="text"
+                                className="rounded-[3px] h-[30px] border-[1px] border-gray-500 outline-none px-[10px]"
                                 onChange={(e) =>
                                     this.handleOnChangeInput(e, "lastName")
                                 }
@@ -126,11 +130,12 @@ class ModalEditUser extends Component {
                             />
                         </div>
                     </div>
-                    <div className="modal-user-body max-w-input mt-3">
-                        <div className="input-container">
+                    <div className="grid grid-cols-1 gap-[15px] mt-3">
+                        <div className="flex flex-col">
                             <label>Address</label>
                             <input
                                 type="text"
+                                className="rounded-[3px] h-[30px] border-[1px] border-gray-500 outline-none px-[10px]"
                                 onChange={(e) =>
                                     this.handleOnChangeInput(e, "address")
                                 }
@@ -140,20 +145,18 @@ class ModalEditUser extends Component {
                     </div>
                 </ModalBody>
                 <ModalFooter>
-                    <Button
-                        color="primary"
-                        className="px-3"
+                    <button
                         onClick={() => this.handleSaveUser()}
+                        className="px-3 btn btn-primary"
                     >
                         Save changes
-                    </Button>{" "}
-                    <Button
-                        color="secondary"
-                        className="px-3"
+                    </button>
+                    <button
                         onClick={() => this.toggle()}
+                        className="px-3 btn btn-secondary"
                     >
                         Close
-                    </Button>
+                    </button>
                 </ModalFooter>
             </Modal>
         );

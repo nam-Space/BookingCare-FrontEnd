@@ -14,7 +14,7 @@ class Header extends Component {
     };
 
     render() {
-        const { processLogout, language } = this.props;
+        const { processLogout, language, userInfo } = this.props;
 
         return (
             <div className="header-container">
@@ -26,7 +26,7 @@ class Header extends Component {
                 <div className="flex items-center">
                     <span className="mr-[10px]">
                         <FormattedMessage id="home-header.welcome" />
-                        <span className="ml-[4px]">Admin!</span>
+                        <span className="ml-[4px]">{userInfo?.firstName}!</span>
                     </span>
                     <span
                         onClick={() => this.changeLanguage(LANGUAGES.VI)}
@@ -63,6 +63,7 @@ const mapStateToProps = (state) => {
     return {
         isLoggedIn: state.user.isLoggedIn,
         language: state.app.language,
+        userInfo: state.user.userInfo,
     };
 };
 

@@ -107,7 +107,7 @@ class UserManage extends Component {
         let arrUsers = this.state.arrUsers;
 
         return (
-            <div className="users-container">
+            <div className="max-w-[1440px] mx-auto">
                 <ModalUser
                     isOpen={this.state.isOpenModalUser}
                     toggleFromParent={this.toggleUserModal}
@@ -130,7 +130,7 @@ class UserManage extends Component {
                     </button>
                 </div>
                 <div className="users-table mt-3 mx-1">
-                    <table id="customers">
+                    <table>
                         <thead>
                             <tr>
                                 <th>Email</th>
@@ -149,7 +149,7 @@ class UserManage extends Component {
                                     <td>{item.address}</td>
                                     <td>
                                         <button
-                                            className="btn-edit"
+                                            className="h-[30px] w-[30px] border-none outline-none bg-transparent text-orange-400 hover:text-orange-400"
                                             onClick={() =>
                                                 this.handleEditUser(item)
                                             }
@@ -157,7 +157,7 @@ class UserManage extends Component {
                                             <i className="fas fa-pencil-alt"></i>
                                         </button>
                                         <button
-                                            className="btn-delete"
+                                            className="w-[50px] border-none outline-none bg-transparent text-[rgb(235,15,15)] hover:text-[rgb(235,15,15)]"
                                             onClick={() =>
                                                 this.handleDeleteUser(item)
                                             }

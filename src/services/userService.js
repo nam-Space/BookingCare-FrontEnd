@@ -26,3 +26,11 @@ export const deleteUserService = async (userId) => {
 export const editUserService = (inputData) => {
     return axios.put("/api/edit-user", inputData);
 };
+
+export const getAllCodeService = (inputData) => {
+    return axios.get(`/api/allcode?type=${inputData}`);
+};
+
+export const getTopDoctorHomeService = (limit) => {
+    return axios.get(`/api/top-doctor-home?limit=${limit}`);
+};
