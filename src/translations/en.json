@@ -23,18 +23,6 @@
         "child-6": "Dental Examination"
     },
     "menu": {
-        "system": {
-            "header": "System",
-            "system-administrator": {
-                "header": "System Administrator",
-                "user-manage": "User manage",
-                "user-redux": "Manage user using redux",
-                "register-package-group-or-account": "Register service package for group/account"
-            },
-            "system-parameter": {
-                "header": "System-parameter"
-            }
-        },
         "admin": {
             "manage-user": "Manage users",
             "manage-doctor": "Doctor management",
@@ -47,6 +35,9 @@
             "manage-specialty": "Specialty management",
             "handbook": "Handbook",
             "manage-handbook": "Manage the handbook"
+        },
+        "doctor": {
+            "manage-schedule": "Manage doctor's schedule"
         }
     },
     "manage-user": {
@@ -68,5 +59,41 @@
     "homepage": {
         "out-standing-doctor": "Outstanding Doctor of the last Week",
         "more-info": "See more"
+    },
+    "manage-schedule": {
+        "title": "Manage doctor's examination plan",
+        "choose-doctor": "Choose doctor",
+        "choose-date": "Choose date",
+        "save": "Save info"
+    },
+    "patient": {
+        "detail-doctor": {
+            "schedule": "Schedule",
+            "no-schedule": "No appointment available during this time, please choose another time",
+            "choose": "Choose ",
+            "book-free": " and book (Scheduling fee 0 VND)"
+        },
+        "extra-info-doctor": {
+            "text-address": "ADDRESS OF EXAMINATION",
+            "price": "CHECK PRICE:",
+            "detail": "View details",
+            "payment": "The patient can pay the cost by:",
+            "hide-price": "Hide price list"
+        }
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "Create more doctor information",
+            "select-doctor": "Select a doctor",
+            "intro": "Intro info",
+            "add": "Create information",
+            "save": "Save information",
+            "price": "Price for medical examination",
+            "payment": "Payment method",
+            "province": "Province",
+            "nameClinic": "Clinical name",
+            "addressClinic": "Address of the clinic",
+            "note": "Note"
+        }
     }
 }

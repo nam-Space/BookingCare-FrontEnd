@@ -9,6 +9,7 @@ import ManageDoctor from "../containers/System/Admin/ManageDoctor";
 class System extends Component {
     render() {
         const { systemMenuPath, isLoggedIn } = this.props;
+
         return (
             <>
                 {isLoggedIn && <Header />}

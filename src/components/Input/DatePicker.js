@@ -19,7 +19,7 @@ class DatePicker extends Component {
         this.flatpickr = element && element.flatpickr;
         this.flatpickrNode = element && element.node;
         if (this.flatpickrNode) {
-            this.flatpickrNode.addEventListener("blur", this.handleBlur);
+            // this.flatpickrNode.addEventListener("blur", this.handleBlur);
             this.flatpickrNode.addEventListener("keydown", this.handlerKeyDown);
         }
     };

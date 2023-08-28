@@ -14,7 +14,7 @@ class Homepage extends Component {
     render() {
         return (
             <div className="pt-[78px]">
-                <HomeHeader />
+                <HomeHeader isShowBanner={true} />
                 <Specialty />
                 <MedicalFacility />
                 <OutStandingDoctor />

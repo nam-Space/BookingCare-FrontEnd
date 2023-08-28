@@ -8,6 +8,7 @@ import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils/constant";
 import imgDefault from "../../../assets/images/imgDefault.png";
 import { FormattedMessage } from "react-intl";
+import { withRouter } from "react-router";
 
 class OutStandingDoctor extends Component {
     constructor(props) {
@@ -28,6 +29,10 @@ class OutStandingDoctor extends Component {
     componentDidMount() {
         this.props.loadTopDoctors();
     }
+
+    handleViewDetailDoctor = (doctor) => {
+        this.props.history.push(`/detail-doctor/${doctor.id}`);
+    };
 
     render() {
         SwiperCore.use([Navigation]);
@@ -64,7 +69,12 @@ class OutStandingDoctor extends Component {
                             let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`;
 
                             return (
-                                <SwiperSlide key={index}>
+                                <SwiperSlide
+                                    key={index}
+                                    onClick={() =>
+                                        this.handleViewDetailDoctor(item)
+                                    }
+                                >
                                     <div className="flex flex-col justify-center items-center bg-white py-[10px]">
                                         <img
                                             src={imageBase64 || imgDefault}
@@ -103,4 +113,6 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor);
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor)
+);

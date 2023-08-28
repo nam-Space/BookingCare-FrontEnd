@@ -15,10 +15,15 @@ import appStoreDownload from "../../assets/images/header/app-store-badge.svg";
 import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../utils/constant";
 import { changeLanguageApp } from "../../store/actions/appActions";
+import { withRouter } from "react-router";
 
 class HomeHeader extends Component {
     changeLanguage = (language) => {
         this.props.changeLanguageAppRedux(language);
+    };
+
+    returnToHome = () => {
+        this.props.history.push("/home");
     };
 
     render() {
@@ -26,11 +31,14 @@ class HomeHeader extends Component {
 
         return (
             <>
-                <div className="home-header-container fixed top-0 left-0 right-0 bg-white z-[50]">
+                <div className="home-header-container fixed top-0 left-0 right-0 bg-white z-[50] shadow-[2px_2px_4px_1px_rgba(0,0,0,0.1)]">
                     <div className="home-header-content">
                         <div className="left-content">
                             <i className="fas fa-bars"></i>
-                            <div className="header-logo"></div>
+                            <div
+                                className="header-logo"
+                                onClick={() => this.returnToHome()}
+                            ></div>
                         </div>
                         <div className="center-content">
                             <div className="child-content">
@@ -106,72 +114,83 @@ class HomeHeader extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="home-header-banner">
-                    <img src={background} className="w-100 bg-header" />
-                    <div className="overlay-dark"></div>
-                    <div className="overlay-light"></div>
-                    <div className="text-bg-container">
-                        <div className="title-1">
-                            <FormattedMessage id="banner.title-1" />
-                        </div>
-                        <div className="title-2">
-                            <FormattedMessage id="banner.title-2" />
-                        </div>
-                        <div className="search">
-                            <i className="fas fa-search"></i>
-                            <FormattedMessage
-                                id="banner.search-placeholder"
-                                defaultMessage="search"
-                            >
-                                {(placeholder) => (
-                                    <input placeholder={placeholder} />
-                                )}
-                            </FormattedMessage>
-                        </div>
-                        <div className="download-container">
-                            <img src={googleDownload} className="download" />
-                            <img src={appStoreDownload} className="download" />
-                        </div>
-                        <div className="options">
-                            <div className="option-child">
-                                <img src={hospital} className="img-child" />
-                                <div className="text-child">
-                                    <FormattedMessage id="banner.child-1" />
-                                </div>
+                {this.props.isShowBanner && (
+                    <div className="home-header-banner">
+                        <img src={background} className="w-100 bg-header" />
+                        <div className="overlay-dark"></div>
+                        <div className="overlay-light"></div>
+                        <div className="text-bg-container">
+                            <div className="title-1">
+                                <FormattedMessage id="banner.title-1" />
                             </div>
-                            <div className="option-child">
-                                <img src={phone} className="img-child" />
-                                <div className="text-child">
-                                    <FormattedMessage id="banner.child-2" />
-                                </div>
+                            <div className="title-2">
+                                <FormattedMessage id="banner.title-2" />
                             </div>
-                            <div className="option-child">
-                                <img src={check} className="img-child" />
-                                <div className="text-child">
-                                    <FormattedMessage id="banner.child-3" />
-                                </div>
+                            <div className="search">
+                                <i className="fas fa-search"></i>
+                                <FormattedMessage
+                                    id="banner.search-placeholder"
+                                    defaultMessage="search"
+                                >
+                                    {(placeholder) => (
+                                        <input placeholder={placeholder} />
+                                    )}
+                                </FormattedMessage>
                             </div>
-                            <div className="option-child">
-                                <img src={chemistry} className="img-child" />
-                                <div className="text-child">
-                                    <FormattedMessage id="banner.child-4" />
-                                </div>
+                            <div className="download-container">
+                                <img
+                                    src={googleDownload}
+                                    className="download"
+                                />
+                                <img
+                                    src={appStoreDownload}
+                                    className="download"
+                                />
                             </div>
-                            <div className="option-child">
-                                <img src={health} className="img-child" />
-                                <div className="text-child">
-                                    <FormattedMessage id="banner.child-5" />
+                            <div className="options">
+                                <div className="option-child">
+                                    <img src={hospital} className="img-child" />
+                                    <div className="text-child">
+                                        <FormattedMessage id="banner.child-1" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="option-child">
-                                <img src={teeth} className="img-child" />
-                                <div className="text-child">
-                                    <FormattedMessage id="banner.child-6" />
+                                <div className="option-child">
+                                    <img src={phone} className="img-child" />
+                                    <div className="text-child">
+                                        <FormattedMessage id="banner.child-2" />
+                                    </div>
+                                </div>
+                                <div className="option-child">
+                                    <img src={check} className="img-child" />
+                                    <div className="text-child">
+                                        <FormattedMessage id="banner.child-3" />
+                                    </div>
+                                </div>
+                                <div className="option-child">
+                                    <img
+                                        src={chemistry}
+                                        className="img-child"
+                                    />
+                                    <div className="text-child">
+                                        <FormattedMessage id="banner.child-4" />
+                                    </div>
+                                </div>
+                                <div className="option-child">
+                                    <img src={health} className="img-child" />
+                                    <div className="text-child">
+                                        <FormattedMessage id="banner.child-5" />
+                                    </div>
+                                </div>
+                                <div className="option-child">
+                                    <img src={teeth} className="img-child" />
+                                    <div className="text-child">
+                                        <FormattedMessage id="banner.child-6" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
             </>
         );
     }
@@ -192,4 +211,6 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(HomeHeader)
+);

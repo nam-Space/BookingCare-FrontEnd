@@ -34,3 +34,33 @@ export const getAllCodeService = (inputData) => {
 export const getTopDoctorHomeService = (limit) => {
     return axios.get(`/api/top-doctor-home?limit=${limit}`);
 };
+
+export const getAllDoctors = () => {
+    return axios.get(`/api/get-all-doctors`);
+};
+
+export const saveDetailDoctorService = (data) => {
+    return axios.post(`/api/save-info-doctor`, data);
+};
+
+export const getDetailInfoDoctor = (inputId) => {
+    return axios.get(`/api/get-detail-doctor-by-id?id=${inputId}`);
+};
+
+export const saveBulkScheduleDoctor = (data) => {
+    return axios.post(`/api/bulk-create-schedule`, data);
+};
+
+export const getScheduleDoctorByDate = (doctorId, date) => {
+    return axios.get(
+        `/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`
+    );
+};
+
+export const getExtraInfoDoctorById = (doctorId) => {
+    return axios.get(`/api/get-extra-info-doctor-by-id?doctorId=${doctorId}`);
+};
+
+export const getProfileDoctorById = (doctorId) => {
+    return axios.get(`/api/get-profile-doctor-by-id?doctorId=${doctorId}`);
+};
