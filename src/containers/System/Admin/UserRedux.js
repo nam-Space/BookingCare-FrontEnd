@@ -5,7 +5,12 @@ import {
     getAllCodeService,
     getTopDoctorHomeService,
 } from "../../../services/userService";
-import { CRUD_ACTIONS, CommonUtils, LANGUAGES } from "../../../utils";
+import {
+    CRUD_ACTIONS,
+    CommonUtils,
+    LANGUAGES,
+    USER_ROLE,
+} from "../../../utils";
 import * as actions from "../../../store/actions";
 import Lightbox from "react-image-lightbox";
 import TableManageUser from "./TableManageUser";
@@ -213,12 +218,19 @@ class UserRedux extends Component {
         } = this.state;
 
         return (
-            <div>
-                <div className="title">User Redux</div>
+            <div id="user-container">
+                <div className="title">
+                    {" "}
+                    <FormattedMessage id="manage-user.title" />
+                </div>
                 <div className="max-w-[1440px] mx-auto">
                     <form>
                         <h1 className="text-[26px] font-semibold">
-                            <FormattedMessage id="manage-user.add" />
+                            {action === CRUD_ACTIONS.CREATE ? (
+                                <FormattedMessage id="manage-user.add-user" />
+                            ) : (
+                                <FormattedMessage id="manage-user.edit-user" />
+                            )}
                         </h1>
                         <div className="row g-3 mt-3">
                             <div className="form-group col-md-3">
@@ -409,7 +421,7 @@ class UserRedux extends Component {
                                 <div
                                     className={`${
                                         previewImg ? "cursor-pointer" : ""
-                                    } mt-3 border-dashed border-gray-400 border-[3px] h-[80px] bg-[url(${previewImg})] bg-contain bg-no-repeat bg-center`}
+                                    } mt-[4px] border-dashed border-gray-400 border-[3px] h-[80px] bg-[url(${previewImg})] bg-contain bg-no-repeat bg-center`}
                                     onClick={this.openPreviewImage}
                                 ></div>
                             </div>

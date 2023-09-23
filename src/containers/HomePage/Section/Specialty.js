@@ -4,19 +4,46 @@ import { connect } from "react-redux";
 import { SwiperSlide, Swiper } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
 
-class Specialty extends Component {
-    render() {
-        SwiperCore.use([Navigation]);
+import * as actions from "../../../store/actions";
+import { FormattedMessage } from "react-intl";
 
+import { withRouter } from "react-router";
+
+SwiperCore.use([Navigation]);
+class Specialty extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataSpecialty: [],
+        };
+    }
+
+    componentDidMount() {
+        this.props.fetchAllSpecialty();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.allSpecialty !== this.props.allSpecialty) {
+            this.setState({
+                dataSpecialty: this.props.allSpecialty,
+            });
+        }
+    }
+
+    handleViewDetailSpecialty = (item) => {
+        this.props.history.push(`/detail-specialty/${item.id}`);
+    };
+
+    render() {
         return (
             <div className="section-container py-[30px] bg-[#F5F5F5]">
                 <div className="section-content">
                     <div className="flex justify-between items-center mb-[25px]">
                         <h1 className="text-[22px] font-semibold">
-                            Chuyên khoa phổ biến
+                            <FormattedMessage id="homepage.specialty-popular" />
                         </h1>
                         <button className="uppercase px-[15px] py-[10px] bg-[#ebebeb] hover:bg-[#f7d800] transition-all duration-150">
-                            Xem thêm
+                            <FormattedMessage id="homepage.more-info" />
                         </button>
                     </div>
                     <Swiper
@@ -25,78 +52,35 @@ class Specialty extends Component {
                         navigation={true}
                         modules={[Navigation]}
                     >
-                        <SwiperSlide>
-                            <img
-                                src="https://cdn.bookingcare.vn/fr/w300/2023/06/20/112457-co-xuong-khop.jpg"
-                                className="w-full"
-                            />
-                            <p className="leading-[18px] text-[14px] mt-[8px]">
-                                Cơ Xương Khớp
-                            </p>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img
-                                src="https://cdn.bookingcare.vn/fr/w300/2023/06/20/112457-co-xuong-khop.jpg"
-                                className="w-full"
-                            />
-                            <p className="leading-[18px] text-[14px] mt-[8px]">
-                                Cơ Xương Khớp
-                            </p>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img
-                                src="https://cdn.bookingcare.vn/fr/w300/2023/06/20/112457-co-xuong-khop.jpg"
-                                className="w-full"
-                            />
-                            <p className="leading-[18px] text-[14px] mt-[8px]">
-                                Cơ Xương Khớp
-                            </p>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img
-                                src="https://cdn.bookingcare.vn/fr/w300/2023/06/20/112457-co-xuong-khop.jpg"
-                                className="w-full"
-                            />
-                            <p className="leading-[18px] text-[14px] mt-[8px]">
-                                Cơ Xương Khớp
-                            </p>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img
-                                src="https://cdn.bookingcare.vn/fr/w300/2023/06/20/112457-co-xuong-khop.jpg"
-                                className="w-full"
-                            />
-                            <p className="leading-[18px] text-[14px] mt-[8px]">
-                                Cơ Xương Khớp
-                            </p>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img
-                                src="https://cdn.bookingcare.vn/fr/w300/2023/06/20/112457-co-xuong-khop.jpg"
-                                className="w-full"
-                            />
-                            <p className="leading-[18px] text-[14px] mt-[8px]">
-                                Cơ Xương Khớp
-                            </p>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img
-                                src="https://cdn.bookingcare.vn/fr/w300/2023/06/20/112457-co-xuong-khop.jpg"
-                                className="w-full"
-                            />
-                            <p className="leading-[18px] text-[14px] mt-[8px]">
-                                Cơ Xương Khớp
-                            </p>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img
-                                src="https://cdn.bookingcare.vn/fr/w300/2023/06/20/112457-co-xuong-khop.jpg"
-                                className="w-full"
-                            />
-                            <p className="leading-[18px] text-[14px] mt-[8px]">
-                                Cơ Xương Khớp
-                            </p>
-                        </SwiperSlide>
+                        {this.state.dataSpecialty &&
+                            this.state.dataSpecialty.length > 0 &&
+                            this.state.dataSpecialty.map((item, index) => {
+                                let imageBase64 = "";
+                                if (item.image) {
+                                    imageBase64 = new Buffer(
+                                        item.image,
+                                        "base64"
+                                    ).toString("binary");
+                                }
+
+                                return (
+                                    <SwiperSlide
+                                        key={index}
+                                        onClick={() =>
+                                            this.handleViewDetailSpecialty(item)
+                                        }
+                                    >
+                                        <img
+                                            src={imageBase64}
+                                            alt={item.name}
+                                            className="w-full h-[192px] object-cover"
+                                        />
+                                        <p className="leading-[18px] text-[14px] mt-[8px]">
+                                            {item.name}
+                                        </p>
+                                    </SwiperSlide>
+                                );
+                            })}
                     </Swiper>
                 </div>
             </div>
@@ -108,11 +92,16 @@ const mapStateToProps = (state) => {
     return {
         isLoggedIn: state.user.isLoggedIn,
         language: state.app.language,
+        allSpecialty: state.admin.allSpecialty,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {};
+    return {
+        fetchAllSpecialty: () => dispatch(actions.fetchAllSpecialtyStart()),
+    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty);
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(Specialty)
+);

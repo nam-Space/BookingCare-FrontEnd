@@ -3,20 +3,45 @@ import { connect } from "react-redux";
 
 import { SwiperSlide, Swiper } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
+import * as actions from "../../../store/actions";
+import { withRouter } from "react-router";
+import { FormattedMessage } from "react-intl";
 
+SwiperCore.use([Navigation]);
 class Handbook extends Component {
-    render() {
-        SwiperCore.use([Navigation]);
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataHandbook: [],
+        };
+    }
 
+    componentDidMount() {
+        this.props.fetchAllHandbook();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.allHandbook !== this.props.allHandbook) {
+            this.setState({
+                dataHandbook: this.props.allHandbook,
+            });
+        }
+    }
+
+    handleViewDetailHandbook = (item) => {
+        this.props.history.push(`/detail-handbook/${item.id}`);
+    };
+
+    render() {
         return (
             <div className="section-container py-[30px] bg-[#F5F5F5]">
                 <div className="section-content max-w-[1200px] mx-auto overflow-hidden">
                     <div className="flex justify-between items-center mb-[25px]">
                         <h1 className="text-[22px] font-semibold">
-                            Bác sĩ nổi bật tuần qua
+                            <FormattedMessage id="homepage.handbook" />
                         </h1>
                         <button className="uppercase px-[15px] py-[10px] bg-[#ebebeb] hover:bg-[#f7d800] transition-all duration-150">
-                            TÌM KIẾM
+                            <FormattedMessage id="homepage.more-info" />
                         </button>
                     </div>
                     <Swiper
@@ -25,94 +50,35 @@ class Handbook extends Component {
                         navigation={true}
                         modules={[Navigation]}
                     >
-                        <SwiperSlide>
-                            <div className="flex justify-center items-start py-[10px]">
-                                <img
-                                    src="https://cdn.bookingcare.vn/fr/w300/2023/07/11/171442-kham-da-lieu-quan-binh-thanh.jpg"
-                                    className="mr-[10px]"
-                                />
-                                <p className="font-bold text-[16px] mt-[12px]">
-                                    Bác sĩ Chuyên khoa II Trần Minh Khuyên
-                                </p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className="flex justify-center items-start py-[10px]">
-                                <img
-                                    src="https://cdn.bookingcare.vn/fr/w300/2023/07/11/171442-kham-da-lieu-quan-binh-thanh.jpg"
-                                    className="mr-[10px]"
-                                />
-                                <p className="font-bold text-[16px] mt-[12px]">
-                                    Bác sĩ Chuyên khoa II Trần Minh Khuyên
-                                </p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className="flex justify-center items-start py-[10px]">
-                                <img
-                                    src="https://cdn.bookingcare.vn/fr/w300/2023/07/11/171442-kham-da-lieu-quan-binh-thanh.jpg"
-                                    className="mr-[10px]"
-                                />
-                                <p className="font-bold text-[16px] mt-[12px]">
-                                    Bác sĩ Chuyên khoa II Trần Minh Khuyên
-                                </p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className="flex justify-center items-start py-[10px]">
-                                <img
-                                    src="https://cdn.bookingcare.vn/fr/w300/2023/07/11/171442-kham-da-lieu-quan-binh-thanh.jpg"
-                                    className="mr-[10px]"
-                                />
-                                <p className="font-bold text-[16px] mt-[12px]">
-                                    Bác sĩ Chuyên khoa II Trần Minh Khuyên
-                                </p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className="flex justify-center items-start py-[10px]">
-                                <img
-                                    src="https://cdn.bookingcare.vn/fr/w300/2023/07/11/171442-kham-da-lieu-quan-binh-thanh.jpg"
-                                    className="mr-[10px]"
-                                />
-                                <p className="font-bold text-[16px] mt-[12px]">
-                                    Bác sĩ Chuyên khoa II Trần Minh Khuyên
-                                </p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className="flex justify-center items-start py-[10px]">
-                                <img
-                                    src="https://cdn.bookingcare.vn/fr/w300/2023/07/11/171442-kham-da-lieu-quan-binh-thanh.jpg"
-                                    className="mr-[10px]"
-                                />
-                                <p className="font-bold text-[16px] mt-[12px]">
-                                    Bác sĩ Chuyên khoa II Trần Minh Khuyên
-                                </p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className="flex justify-center items-start py-[10px]">
-                                <img
-                                    src="https://cdn.bookingcare.vn/fr/w300/2023/07/11/171442-kham-da-lieu-quan-binh-thanh.jpg"
-                                    className="mr-[10px]"
-                                />
-                                <p className="font-bold text-[16px] mt-[12px]">
-                                    Bác sĩ Chuyên khoa II Trần Minh Khuyên
-                                </p>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className="flex justify-center items-start py-[10px]">
-                                <img
-                                    src="https://cdn.bookingcare.vn/fr/w300/2023/07/11/171442-kham-da-lieu-quan-binh-thanh.jpg"
-                                    className="mr-[10px]"
-                                />
-                                <p className="font-bold text-[16px] mt-[12px]">
-                                    Bác sĩ Chuyên khoa II Trần Minh Khuyên
-                                </p>
-                            </div>
-                        </SwiperSlide>
+                        {this.state.dataHandbook.length > 0 &&
+                            this.state.dataHandbook.map((item, index) => {
+                                let imageBase64 = "";
+                                if (item.image) {
+                                    imageBase64 = new Buffer(
+                                        item.image,
+                                        "base64"
+                                    ).toString("binary");
+                                }
+
+                                return (
+                                    <SwiperSlide
+                                        key={index}
+                                        onClick={() =>
+                                            this.handleViewDetailHandbook(item)
+                                        }
+                                    >
+                                        <div className="grid grid-cols-2 gap-[10px] py-[10px]">
+                                            <img
+                                                src={imageBase64}
+                                                className="mr-[10px] h-[192px] object-cover"
+                                            />
+                                            <p className="font-bold text-[16px] mt-[12px]">
+                                                {item.name}
+                                            </p>
+                                        </div>
+                                    </SwiperSlide>
+                                );
+                            })}
                     </Swiper>
                 </div>
             </div>
@@ -124,11 +90,16 @@ const mapStateToProps = (state) => {
     return {
         isLoggedIn: state.user.isLoggedIn,
         language: state.app.language,
+        allHandbook: state.admin.allHandbook,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {};
+    return {
+        fetchAllHandbook: () => dispatch(actions.fetchAllHandbookStart()),
+    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Handbook);
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(Handbook)
+);

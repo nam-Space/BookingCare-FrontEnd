@@ -37,11 +37,14 @@
             "manage-handbook": "Quản lý cẩm nang"
         },
         "doctor": {
-            "manage-schedule": "Quản lý kế hoạch khám bệnh"
+            "manage-schedule": "Quản lý kế hoạch khám bệnh",
+            "manage-patient": "Quản lý bệnh nhân khám bệnh"
         }
     },
     "manage-user": {
-        "add": "Thêm mới người dùng",
+        "title": "Quản lý người dùng",
+        "add-user": "Thêm mới người dùng",
+        "edit-user": "Sửa người dùng",
         "email": "Email",
         "password": "Mật khẩu",
         "first-name": "Tên",
@@ -54,11 +57,15 @@
         "image": "Ảnh đại diện",
         "download": "Tải lên",
         "save": "Lưu user",
-        "edit": "Lưu thay đổi"
+        "edit": "Lưu thay đổi",
+        "action": "Hành động"
     },
     "homepage": {
         "out-standing-doctor": "Bác sỹ nổi bật tuần qua",
-        "more-info": "Xem thêm"
+        "more-info": "Xem thêm",
+        "specialty-popular": "Chuyên khoa phổ biến",
+        "clinic-popular": "Cơ sở y tế nổi bật",
+        "handbook": "Cẩm nang"
     },
     "manage-schedule": {
         "title": "Quản lý kế hoạch khám bệnh của bác sĩ",
@@ -79,6 +86,23 @@
             "detail": "Xem chi tiết",
             "payment": "Người bệnh có thể thanh toán chi phí bằng hình thức:",
             "hide-price": "Ẩn bảng giá"
+        },
+        "booking-modal": {
+            "title": "Thông tin đặt lịch khám bệnh",
+            "free-booking": "Miễn phí đặt lịch",
+            "price-booking": "Giá khám:",
+            "full-name": "Họ tên",
+            "phone-number": "Số điện thoại",
+            "email": "Địa chỉ Email",
+            "address": "Địa chỉ liên hệ",
+            "reason": "Lý do khám",
+            "birthday": "Ngày sinh",
+            "gender": "Giới tính",
+            "btn-confirm": "Xác nhận",
+            "btn-cancel": "Hủy"
+        },
+        "handbook": {
+            "hint": "BookingCare là Nền tảng Y tế chăm sóc sức khỏe toàn diện hàng đầu Việt Nam kết nối người dùng với trên 200 bệnh viện - phòng khám uy tín, hơn 1,500 bác sĩ chuyên khoa giỏi và hàng nghìn dịch vụ, sản phẩm y tế chất lượng cao."
         }
     },
     "admin": {
@@ -93,7 +117,39 @@
             "province": "Tỉnh thành",
             "nameClinic": "Tên phòng khám",
             "addressClinic": "Địa chỉ phòng khám",
-            "note": "Ghi chú"
+            "note": "Ghi chú",
+            "select-specialty": "Chọn chuyên khoa",
+            "select-clinic": "Chọn phòng khám"
+        },
+        "manage-clinic": {
+            "title": "Quản lý phòng khám",
+            "name": "Tên phòng khám",
+            "address": "Địa chỉ phòng khám",
+            "image-avatar": "Ảnh đại diện",
+            "image-clinic": "Ảnh phòng khám",
+            "upload": "Tải lên",
+            "button-create": "Tạo mới phòng khám",
+            "button-update": "Sửa phòng khám",
+            "action": "Hành động"
+        },
+        "manage-specialty": {
+            "title": "Quản lý chuyên khoa",
+            "name": "Tên chuyên khoa",
+            "image": "Ảnh chuyên khoa",
+            "upload": "Tải lên",
+            "button-create": "Tạo mới chuyên khoa",
+            "button-update": "Sửa chuyên khoa",
+            "action": "Hành động"
+        },
+        "manage-handbook": {
+            "title": "Quản lý cẩm nang",
+            "name": "Tên cẩm nang",
+            "caption": "Chú thích ảnh",
+            "image": "Ảnh cẩm nang",
+            "upload": "Tải lên",
+            "button-create": "Tạo mới cẩm nang",
+            "button-update": "Sửa cẩm nang",
+            "action": "Hành động"
         }
     }
 }

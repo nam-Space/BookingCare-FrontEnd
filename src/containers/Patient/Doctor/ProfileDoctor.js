@@ -6,6 +6,8 @@ import defaultAvatar from "../../../assets/images/imgDefault.png";
 import NumberFormat from "react-number-format";
 import moment from "moment";
 import localization from "moment/locale/vi";
+import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
 
 class ProfileDoctor extends Component {
     constructor(props) {
@@ -67,13 +69,21 @@ class ProfileDoctor extends Component {
                 <div>
                     {time} - {date}
                 </div>
-                <div>Miễn phí đặt lịch</div>
+                <div>
+                    <FormattedMessage id="patient.booking-modal.free-booking" />
+                </div>
             </>
         );
     };
 
     render() {
-        let { language, isShowDescDoctor, dataTime } = this.props;
+        let {
+            language,
+            isShowDescDoctor,
+            dataTime,
+            isShowLinkDetail,
+            isShowPrice,
+        } = this.props;
         let { dataProfile } = this.state;
         let nameVi = "",
             nameEn = "";
@@ -86,11 +96,15 @@ class ProfileDoctor extends Component {
             <div>
                 <div className="max-w-[1200px] mx-auto py-[14px] flex items-center">
                     <img
-                        className="w-[120px] h-[120px] rounded-full object-cover"
+                        className="w-[100px] h-[100px] rounded-full object-cover"
                         src={dataProfile?.image || defaultAvatar}
                     />
                     <div className="ml-[16px]">
-                        <h1 className="text-[28px] font-bold">
+                        <h1
+                            className={`${
+                                this.props.titleActive ? "text-[#45C3D2]" : ""
+                            } text-[20px] font-bold`}
+                        >
                             {language === LANGUAGES.VI ? nameVi : nameEn}
                         </h1>
                         {isShowDescDoctor ? (
@@ -100,22 +114,32 @@ class ProfileDoctor extends Component {
                         )}
                     </div>
                 </div>
-                <div>
-                    Giá khám:{" "}
-                    <NumberFormat
-                        displayType={"text"}
-                        value={
-                            language === LANGUAGES.VI
-                                ? dataProfile?.Doctor_Info?.priceTypeData
-                                      ?.valueVi
-                                : dataProfile?.Doctor_Info?.priceTypeData
-                                      ?.valueEn
-                        }
-                        thousandSeparator={true}
-                        suffix={language === LANGUAGES.VI ? "VND" : ""}
-                        prefix={language === LANGUAGES.EN ? "$" : ""}
-                    />
-                </div>
+                {isShowLinkDetail && (
+                    <Link
+                        to={`/detail-doctor/${this.props.doctorId}`}
+                        className="text-[#45C3D2]"
+                    >
+                        Xem thêm
+                    </Link>
+                )}
+                {isShowPrice && (
+                    <div>
+                        <FormattedMessage id="patient.booking-modal.price-booking" />{" "}
+                        <NumberFormat
+                            displayType={"text"}
+                            value={
+                                language === LANGUAGES.VI
+                                    ? dataProfile?.Doctor_Info?.priceTypeData
+                                          ?.valueVi
+                                    : dataProfile?.Doctor_Info?.priceTypeData
+                                          ?.valueEn
+                            }
+                            thousandSeparator={true}
+                            suffix={language === LANGUAGES.VI ? "VND" : ""}
+                            prefix={language === LANGUAGES.EN ? "$" : ""}
+                        />
+                    </div>
+                )}
             </div>
         );
     }

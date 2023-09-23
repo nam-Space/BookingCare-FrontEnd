@@ -132,7 +132,7 @@ class UserManage extends Component {
                 <div className="users-table mt-3 mx-1">
                     <table>
                         <thead>
-                            <tr>
+                            <tr className="bg-[#04aa6d] text-white">
                                 <th>Email</th>
                                 <th>First name</th>
                                 <th>Last name</th>

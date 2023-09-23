@@ -6,8 +6,12 @@ import UserRedux from "../containers/System/Admin/UserRedux";
 import ManageDoctor from "../containers/System/Admin/ManageDoctor";
 import ManageSchedule from "../containers/System/Doctor/ManageSchedule";
 import Header from "../containers/Header/Header";
+import ManagePatient from "../containers/System/Doctor/ManagePatient";
+import { USER_ROLE } from "../utils";
 
 class Doctor extends Component {
+    componentDidMount() {}
+
     render() {
         const { isLoggedIn } = this.props;
 
@@ -21,6 +25,10 @@ class Doctor extends Component {
                                 path="/doctor/manage-schedule"
                                 component={ManageSchedule}
                             />
+                            <Route
+                                path="/doctor/manage-patient"
+                                component={ManagePatient}
+                            />
                         </Switch>
                     </div>
                 </div>
@@ -31,7 +39,6 @@ class Doctor extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        systemMenuPath: state.app.systemMenuPath,
         isLoggedIn: state.user.isLoggedIn,
     };
 };

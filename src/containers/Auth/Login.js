@@ -4,6 +4,7 @@ import { push } from "connected-react-router";
 import "./login.scss";
 import * as actions from "../../store/actions";
 import { handleLogin } from "../../services/userService";
+import { USER_ROLE } from "../../utils";
 
 class Login extends Component {
     constructor(props) {
@@ -43,6 +44,12 @@ class Login extends Component {
                 });
             }
             if (data && data.errCode === 0) {
+                if (data.user.roleId === USER_ROLE.PATIENT) {
+                    this.setState({
+                        errMessage: "Tài khoản hoặc mật khẩu chưa tồn tại!",
+                    });
+                    return;
+                }
                 this.props.userLoginSuccess(data.user);
             }
         } catch (error) {

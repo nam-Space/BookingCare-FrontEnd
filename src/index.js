@@ -16,12 +16,15 @@ import IntlProviderWrapper from "./hoc/IntlProviderWrapper";
 
 import { Provider } from "react-redux";
 import reduxStore, { persistor } from "./redux";
+import CustomScrollbars from "./components/CustomScrollbars";
 
 const renderApp = () => {
     ReactDOM.render(
         <Provider store={reduxStore}>
             <IntlProviderWrapper>
-                <App persistor={persistor} />
+                <CustomScrollbars style={{ width: "100%", height: "100vh" }}>
+                    <App persistor={persistor} />
+                </CustomScrollbars>
             </IntlProviderWrapper>
         </Provider>,
         document.getElementById("root")

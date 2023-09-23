@@ -2,22 +2,27 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import * as actions from "../../../store/actions";
-import { LANGUAGES, dateFormat } from "../../../utils/constant";
+import { LANGUAGES, USER_ROLE, dateFormat } from "../../../utils/constant";
 import Select from "react-select";
 import DatePicker from "./../../../components/Input/DatePicker";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import moment from "moment";
-import { saveBulkScheduleDoctor } from "../../../services/userService";
+import {
+    getScheduleDoctorByDate,
+    saveBulkScheduleDoctor,
+} from "../../../services/userService";
 
 class ManageSchedule extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             listDoctors: [],
             selectedDoctor: {},
             currentDate: "",
             rangeTime: [],
+            timeOfDoctor: [],
         };
     }
 
@@ -42,7 +47,7 @@ class ManageSchedule extends Component {
         return res;
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    async componentDidUpdate(prevProps, prevState, snapshot) {
         if (
             prevProps.allDoctors !== this.props.allDoctors ||
             prevProps.language !== this.props.language
@@ -57,7 +62,6 @@ class ManageSchedule extends Component {
             let rangeTime = this.props.allScheduleTime.map((item) => {
                 return {
                     ...item,
-                    isSelected: false,
                 };
             });
 
@@ -65,13 +69,29 @@ class ManageSchedule extends Component {
                 rangeTime: rangeTime,
             });
         }
+        if (
+            prevState.selectedDoctor !== this.state.selectedDoctor ||
+            prevState.currentDate !== this.state.currentDate
+        ) {
+            let dateSelected = new Date(this.state.currentDate).getTime();
+            let res = await getScheduleDoctorByDate(
+                this.state.selectedDoctor.value,
+                dateSelected
+            );
+            if (res && res.errCode === 0) {
+                let timeOfDoctor = res.data.map((item) => item.timeType);
+                this.setState({
+                    timeOfDoctor: timeOfDoctor,
+                });
+            }
+        }
     }
 
     handleChangeSelect = async (selectedDoctor) => {
         this.setState({ selectedDoctor });
     };
 
-    handleOnChangeDatePicker = (date) => {
+    handleOnChangeDatePicker = async (date) => {
         if (date.length === 0) {
             alert(
                 "Today is not be choosen! Please select other date to make the schedule"
@@ -83,22 +103,28 @@ class ManageSchedule extends Component {
     };
 
     handleClickBtnTime = (item) => {
-        let rangeTime = this.state.rangeTime.map((time) => {
-            if (time.id === item.id) {
-                time.isSelected = !item.isSelected;
-            }
-
-            return {
-                ...time,
-                isSelected: time.isSelected,
-            };
+        let selectedTime = this.state.timeOfDoctor.find((time) => {
+            return time === item.keyMap;
         });
-        this.setState({ rangeTime: rangeTime });
+
+        if (!selectedTime) {
+            let timeOfDoctor = this.state.timeOfDoctor;
+            timeOfDoctor.push(item.keyMap);
+
+            this.setState({ timeOfDoctor: timeOfDoctor });
+        } else {
+            let timeOfDoctor = this.state.timeOfDoctor.filter((time) => {
+                return time !== item.keyMap;
+            });
+
+            this.setState({ timeOfDoctor: timeOfDoctor });
+        }
     };
 
     handleSaveSchedule = async () => {
         let result = [];
-        let { selectedDoctor, currentDate, rangeTime } = this.state;
+        let { selectedDoctor, currentDate, rangeTime, timeOfDoctor } =
+            this.state;
 
         if (!currentDate) {
             toast.error("Please select the date to make the schedule");
@@ -119,8 +145,8 @@ class ManageSchedule extends Component {
 
         let formattedDate = new Date(currentDate).getTime();
         if (rangeTime.length > 0) {
-            let selectTime = rangeTime.filter(
-                (time) => time.isSelected === true
+            let selectTime = rangeTime.filter((time) =>
+                timeOfDoctor.includes(time.keyMap)
             );
 
             if (selectTime.length > 0) {
@@ -151,7 +177,7 @@ class ManageSchedule extends Component {
     };
 
     render() {
-        const { rangeTime } = this.state;
+        const { rangeTime, timeOfDoctor } = this.state;
 
         return (
             <div>
@@ -186,7 +212,9 @@ class ManageSchedule extends Component {
                         {rangeTime.map((item, index) => (
                             <button
                                 className={`${
-                                    item.isSelected ? "bg-[#FFF04b]" : ""
+                                    timeOfDoctor.includes(item.keyMap)
+                                        ? "bg-[#FFF04b] font-bold"
+                                        : ""
                                 } py-[6px] px-[16px] border-[1px] border-gray-400 rounded-[6px]`}
                                 key={index}
                                 onClick={() => this.handleClickBtnTime(item)}

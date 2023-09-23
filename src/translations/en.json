@@ -37,11 +37,14 @@
             "manage-handbook": "Manage the handbook"
         },
         "doctor": {
-            "manage-schedule": "Manage doctor's schedule"
+            "manage-schedule": "Manage doctor's schedule",
+            "manage-patient": "Manage doctor's patient"
         }
     },
     "manage-user": {
-        "add": "Add new user",
+        "title": "Manage User",
+        "add-user": "Add new user",
+        "edit-user": "Edit user",
         "email": "Email",
         "password": "Password",
         "first-name": "First name",
@@ -54,11 +57,15 @@
         "image": "Avatar",
         "download": "Upload",
         "save": "Save user",
-        "edit": "Save changes"
+        "edit": "Save changes",
+        "action": "Action"
     },
     "homepage": {
         "out-standing-doctor": "Outstanding Doctor of the last Week",
-        "more-info": "See more"
+        "more-info": "See more",
+        "specialty-popular": "Popular specialties",
+        "clinic-popular": "Outstanding medical facilities",
+        "handbook": "Handbook"
     },
     "manage-schedule": {
         "title": "Manage doctor's examination plan",
@@ -79,6 +86,23 @@
             "detail": "View details",
             "payment": "The patient can pay the cost by:",
             "hide-price": "Hide price list"
+        },
+        "booking-modal": {
+            "title": "Information to book a medical appointment",
+            "free-booking": "Free booking",
+            "price-booking": "Price booking:",
+            "full-name": "Full name",
+            "phone-number": "Phone number",
+            "email": "Email address",
+            "address": "Contact address",
+            "reason": "Reason for examination",
+            "birthday": "Birthday",
+            "gender": "Gender",
+            "btn-confirm": "Confirm",
+            "btn-cancel": "Cancel"
+        },
+        "handbook": {
+            "hint": "BookingCare is Vietnam's leading comprehensive health care platform connecting users with more than 200 reputable hospitals and clinics, more than 1,500 talented experts and thousands of high-quality medical products and services."
         }
     },
     "admin": {
@@ -93,7 +117,39 @@
             "province": "Province",
             "nameClinic": "Clinical name",
             "addressClinic": "Address of the clinic",
-            "note": "Note"
+            "note": "Note",
+            "select-specialty": "Specialty",
+            "select-clinic": "Clinic"
+        },
+        "manage-specialty": {
+            "title": "Specialty Management",
+            "name": "Specialty name",
+            "image": "Specialty image",
+            "upload": "Upload",
+            "button-create": "Create new specialty",
+            "button-update": "Edit specialty",
+            "action": "Action"
+        },
+        "manage-clinic": {
+            "title": "Clinic manager",
+            "name": "Clinic name",
+            "address": "Address clinic",
+            "image-avatar": "Avatar image",
+            "image-clinic": "Image clinic",
+            "upload": "Upload",
+            "button-create": "Create new clinic",
+            "button-update": "Edit clinic",
+            "action": "Action"
+        },
+        "manage-handbook": {
+            "title": "Management Handbook",
+            "name": "Handbook name",
+            "caption": "Photo caption",
+            "image": "Photo guide",
+            "upload": "Upload",
+            "button-create": "Create new specialty",
+            "button-update": "Edit specialty",
+            "action": "Action"
         }
     }
 }

@@ -7,6 +7,9 @@ import { LANGUAGES } from "../../../utils";
 import "./DetailDoctor.scss";
 import DoctorSchedule from "./DoctorSchedule";
 import DoctorExtraInfo from "./DoctorExtraInfo";
+import HomeFooter from "../../HomePage/HomeFooter";
+import LikeAndShare from "../SocialPlugin/LikeAndShare";
+import Comment from "../SocialPlugin/Comment";
 
 class DetailDoctor extends Component {
     constructor(props) {
@@ -42,6 +45,11 @@ class DetailDoctor extends Component {
             nameEn = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName}`;
         }
 
+        let currentUrl =
+            +process.env.REACT_APP_IS_LOCALHOST === 1
+                ? window.location.href
+                : "https://chatbot-ai-restaurant.onrender.com";
+
         return (
             <div>
                 <HomeHeader isShowBanner={false} />
@@ -56,6 +64,9 @@ class DetailDoctor extends Component {
                                 {language === LANGUAGES.VI ? nameVi : nameEn}
                             </h1>
                             <p>{detailDoctor?.Markdown?.description}</p>
+                            <div className="mt-[10px]">
+                                <LikeAndShare dataHref={currentUrl} />
+                            </div>
                         </div>
                     </div>
                     <div className="flex max-w-[1200px] mx-auto pb-[22px]">
@@ -79,8 +90,13 @@ class DetailDoctor extends Component {
                                 }}
                             ></div>
                         </div>
+                        <div className="max-w-[1200px] mx-auto mt-[30px]">
+                            <Comment dataHref={currentUrl} width="100%" />
+                        </div>
                     </div>
                 </div>
+
+                <HomeFooter />
             </div>
         );
     }
