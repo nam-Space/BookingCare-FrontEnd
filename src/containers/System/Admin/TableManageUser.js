@@ -7,6 +7,7 @@ import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import { FormattedMessage } from "react-intl";
 import defaultImg from "../../../assets/images/imgDefault.png";
+import userNotHaveAccount from "../../../assets/images/user-not-have-account.png";
 
 const mdParser = new MarkdownIt();
 
@@ -98,7 +99,12 @@ class TableManageUser extends Component {
                                     <tr key={index}>
                                         <td>
                                             <img
-                                                src={avatarBase64 || defaultImg}
+                                                src={
+                                                    item.lastName
+                                                        ? avatarBase64 ||
+                                                          defaultImg
+                                                        : userNotHaveAccount
+                                                }
                                                 alt={`${item.firstName} ${item.lastName}`}
                                                 className="w-[80px] h-[80px] rounded-[50%] object-cover"
                                             />
