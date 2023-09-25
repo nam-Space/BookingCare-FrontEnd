@@ -235,6 +235,7 @@ class DetailSpecialty extends Component {
                                                   isShowLinkDetail={true}
                                                   isShowPrice={false}
                                                   titleActive={true}
+                                                  isLink={true}
                                               />
                                           </div>
                                           <div className="w-[50%]">

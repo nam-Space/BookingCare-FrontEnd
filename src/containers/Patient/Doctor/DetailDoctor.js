@@ -77,7 +77,7 @@ class DetailDoctor extends Component {
                             />
                         )}
 
-                        <div className="ml-[16px]">
+                        <div className="ml-[16px] w-fit">
                             {isLoading ? (
                                 <Skeleton height={30} />
                             ) : (

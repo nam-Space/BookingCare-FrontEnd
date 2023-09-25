@@ -97,6 +97,7 @@ class ProfileDoctor extends Component {
             dataTime,
             isShowLinkDetail,
             isShowPrice,
+            isLink,
         } = this.props;
         let { dataProfile, isLoading } = this.state;
         let nameVi = "",
@@ -112,28 +113,59 @@ class ProfileDoctor extends Component {
                     {isLoading ? (
                         <Skeleton circle width={100} height={100} />
                     ) : (
-                        <img
-                            className="w-[100px] h-[100px] rounded-full object-cover"
-                            src={dataProfile?.image || defaultAvatar}
-                        />
+                        <Link
+                            to={`/detail-doctor/${this.props.doctorId}`}
+                            className="text-[#45C3D2]"
+                        >
+                            <img
+                                className="w-[100px] h-[100px] rounded-full object-cover"
+                                src={dataProfile?.image || defaultAvatar}
+                            />
+                        </Link>
                     )}
 
-                    <div className="ml-[16px]">
-                        <h1
-                            className={`${
-                                this.props.titleActive ? "text-[#45C3D2]" : ""
-                            } text-[20px] font-bold`}
-                        >
-                            {language === LANGUAGES.VI ? nameVi : nameEn}
-                        </h1>
-                        {isShowDescDoctor ? (
+                    <div className="ml-[16px] w-fit">
+                        {isLoading ? (
+                            <Skeleton height={24} />
+                        ) : isLink ? (
+                            <Link
+                                to={`/detail-doctor/${this.props.doctorId}`}
+                                className={`hover:no-underline hover:text-[#45C3D2]`}
+                            >
+                                <h1
+                                    className={`${
+                                        this.props.titleActive
+                                            ? "text-[#45C3D2]"
+                                            : ""
+                                    } text-[20px] font-bold`}
+                                >
+                                    {language === LANGUAGES.VI
+                                        ? nameVi
+                                        : nameEn}
+                                </h1>
+                            </Link>
+                        ) : (
+                            <h1
+                                className={`${
+                                    this.props.titleActive
+                                        ? "text-[#45C3D2]"
+                                        : ""
+                                } text-[20px] font-bold`}
+                            >
+                                {language === LANGUAGES.VI ? nameVi : nameEn}
+                            </h1>
+                        )}
+
+                        {isLoading ? (
+                            <Skeleton height={42} width={400} />
+                        ) : isShowDescDoctor ? (
                             <p>{dataProfile?.Markdown?.description}</p>
                         ) : (
                             this.renderTimeBooking(dataTime)
                         )}
                     </div>
                 </div>
-                {isShowLinkDetail && (
+                {!isLoading && isShowLinkDetail && (
                     <Link
                         to={`/detail-doctor/${this.props.doctorId}`}
                         className="text-[#45C3D2]"
@@ -141,23 +173,27 @@ class ProfileDoctor extends Component {
                         Xem thêm
                     </Link>
                 )}
-                {isShowPrice && (
-                    <div>
-                        <FormattedMessage id="patient.booking-modal.price-booking" />{" "}
-                        <NumberFormat
-                            displayType={"text"}
-                            value={
-                                language === LANGUAGES.VI
-                                    ? dataProfile?.Doctor_Info?.priceTypeData
-                                          ?.valueVi
-                                    : dataProfile?.Doctor_Info?.priceTypeData
-                                          ?.valueEn
-                            }
-                            thousandSeparator={true}
-                            suffix={language === LANGUAGES.VI ? "VND" : ""}
-                            prefix={language === LANGUAGES.EN ? "$" : ""}
-                        />
-                    </div>
+                {isLoading ? (
+                    <Skeleton height={24} width={100} />
+                ) : (
+                    isShowPrice && (
+                        <div>
+                            <FormattedMessage id="patient.booking-modal.price-booking" />{" "}
+                            <NumberFormat
+                                displayType={"text"}
+                                value={
+                                    language === LANGUAGES.VI
+                                        ? dataProfile?.Doctor_Info
+                                              ?.priceTypeData?.valueVi
+                                        : dataProfile?.Doctor_Info
+                                              ?.priceTypeData?.valueEn
+                                }
+                                thousandSeparator={true}
+                                suffix={language === LANGUAGES.VI ? "VND" : ""}
+                                prefix={language === LANGUAGES.EN ? "$" : ""}
+                            />
+                        </div>
+                    )
                 )}
             </div>
         );
