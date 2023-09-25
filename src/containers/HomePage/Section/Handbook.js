@@ -73,7 +73,7 @@ class Handbook extends Component {
                                           <div className="grid grid-cols-2 gap-[10px] py-[10px]">
                                               <img
                                                   src={imageBase64}
-                                                  className="mr-[10px] h-[192px] object-cover"
+                                                  className="mr-[10px] h-[192px] w-full object-cover"
                                               />
                                               <p className="font-bold text-[16px] mt-[12px]">
                                                   {item.name}

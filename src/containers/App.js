@@ -95,11 +95,11 @@ class App extends Component {
                                     path={path.DETAIL_HANDBOOK}
                                     component={DetailHandbook}
                                 />
-                                <Route
+                                {/* <Route
                                     component={() => {
                                         return <Redirect to={path.HOMEPAGE} />;
                                     }}
-                                />
+                                /> */}
                             </Switch>
                         </div>
 

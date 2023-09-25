@@ -71,7 +71,7 @@ class MedicalFacility extends Component {
                                           <div className="flex justify-center items-center">
                                               <img
                                                   src={avatarBase64}
-                                                  className="h-[192px] object-cover"
+                                                  className="h-[192px] w-full object-cover"
                                               />
                                           </div>
                                           <p className="leading-[18px] text-[14px] mt-[8px]">
