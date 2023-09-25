@@ -9,7 +9,6 @@ html {
     font-family: $fontmain;
     font-size: $base-size - 2px;
     height: 100vh;
-    // overflow: hidden;
 
     p,
     h1,
@@ -20,14 +19,10 @@ html {
     h6 {
         margin: 0;
     }
-}
 
-// html {
-//     scroll-padding-top: 78px;
-// }
-
-img {
-    max-width: none;
+    img {
+        max-width: none;
+    }
 }
 
 .btn {
