@@ -12,7 +12,11 @@ class TableManageSpecialty extends Component {
     }
 
     async componentDidMount() {
-        this.props.fetchAllSpecialty();
+        await this.props.fetchAllSpecialty();
+
+        this.props?.parent.setState({
+            isLoading: false,
+        });
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -24,14 +28,25 @@ class TableManageSpecialty extends Component {
     }
 
     handleEditSpecialty = (item) => {
-        const mainContainer = document.querySelector(".main-container");
-        mainContainer.scrollIntoView({ behavior: "smooth" });
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
         this.props.handleEditFromParent(item);
     };
 
     handleDeleteSpecialty = async (item) => {
+        this.props?.parent.setState({
+            isLoading: true,
+        });
+
         await this.props.deleteSpecialty(item.id);
         await this.props.fetchAllSpecialty();
+
+        this.props?.parent.setState({
+            isLoading: false,
+        });
     };
 
     render() {

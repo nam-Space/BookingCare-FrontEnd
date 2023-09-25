@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import * as actions from "../../../store/actions";
 import TableManageClinic from "./TableManageClinic";
 import { FormattedMessage } from "react-intl";
+import LoadingOverlay from "react-loading-overlay";
 
 const mdParser = new MarkdownIt();
 
@@ -23,6 +24,7 @@ class ManageClinic extends Component {
             avatar: "",
             backgroundImage: "",
             isOpenAvatar: false,
+            isLoading: false,
             isOpenBackground: false,
             contentMarkdown: "",
             contentHTML: "",
@@ -31,8 +33,11 @@ class ManageClinic extends Component {
         };
     }
 
-    componentDidMount() {
-        this.props.fetchAllClinic();
+    async componentDidMount() {
+        this.setState({
+            isLoading: true,
+        });
+        await this.props.fetchAllClinic();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -102,6 +107,9 @@ class ManageClinic extends Component {
             action,
         } = this.state;
 
+        this.setState({
+            isLoading: true,
+        });
         if (action === CRUD_ACTIONS.CREATE) {
             await this.props.createNewClinic({
                 name,
@@ -120,6 +128,7 @@ class ManageClinic extends Component {
                 contentMarkdown: "",
                 contentHTML: "",
                 isOpenAvatar: false,
+                isLoading: false,
             });
         } else {
             await this.props.updateClinic({
@@ -142,6 +151,7 @@ class ManageClinic extends Component {
                 contentHTML: "",
                 isOpenAvatar: false,
                 action: CRUD_ACTIONS.CREATE,
+                isLoading: false,
             });
         }
     };
@@ -174,13 +184,14 @@ class ManageClinic extends Component {
         const {
             isOpenAvatar,
             isOpenBackground,
+            isLoading,
             avatar,
             backgroundImage,
             action,
         } = this.state;
 
         return (
-            <div>
+            <LoadingOverlay active={isLoading} spinner text="Loading...">
                 <div className="font-semibold title text-center mb-[20px]">
                     <FormattedMessage id="admin.manage-clinic.title" />
                 </div>
@@ -330,9 +341,10 @@ class ManageClinic extends Component {
                     </button>
                     <TableManageClinic
                         handleEditFromParent={this.handleEditFromParent}
+                        parent={this}
                     />
                 </div>
-            </div>
+            </LoadingOverlay>
         );
     }
 }

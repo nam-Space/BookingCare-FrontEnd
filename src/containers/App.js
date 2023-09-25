@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { ConnectedRouter as Router } from "connected-react-router";
 import { history } from "../redux";
 import { ToastContainer } from "react-toastify";
@@ -94,6 +94,11 @@ class App extends Component {
                                 <Route
                                     path={path.DETAIL_HANDBOOK}
                                     component={DetailHandbook}
+                                />
+                                <Route
+                                    component={() => {
+                                        return <Redirect to={path.HOMEPAGE} />;
+                                    }}
                                 />
                             </Switch>
                         </div>

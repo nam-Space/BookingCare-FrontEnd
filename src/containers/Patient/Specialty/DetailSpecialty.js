@@ -11,6 +11,7 @@ import { LANGUAGES } from "../../../utils";
 import _ from "lodash";
 import ProfileDoctor from "../Doctor/ProfileDoctor";
 import HomeFooter from "../../HomePage/HomeFooter";
+import Skeleton from "react-loading-skeleton";
 
 class DetailSpecialty extends Component {
     constructor(props) {
@@ -20,10 +21,18 @@ class DetailSpecialty extends Component {
             dataDetailSpecialty: {},
             listProvince: [],
             isShowDetail: false,
+            isLoading: true,
         };
     }
 
     async componentDidMount() {
+        window.scroll({
+            top: 0,
+            left: 0,
+        });
+        this.setState({
+            isLoading: true,
+        });
         if (
             this.props.match &&
             this.props.match.params &&
@@ -69,6 +78,9 @@ class DetailSpecialty extends Component {
                 });
             }
         }
+        this.setState({
+            isLoading: false,
+        });
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {}
@@ -105,8 +117,13 @@ class DetailSpecialty extends Component {
     };
 
     render() {
-        const { arrDoctorId, dataDetailSpecialty, listProvince, isShowDetail } =
-            this.state;
+        const {
+            arrDoctorId,
+            dataDetailSpecialty,
+            listProvince,
+            isShowDetail,
+            isLoading,
+        } = this.state;
 
         let imageBase64 = "";
         if (dataDetailSpecialty.image) {
@@ -128,82 +145,119 @@ class DetailSpecialty extends Component {
                         <div
                             className={`absolute top-0 left-0 right-0 bottom-0 bg-[url(${imageBase64})] bg-center bg-no-repeat bg-cover opacity-30`}
                         ></div>
-                        <div
-                            className="max-w-[1200px] mx-auto pt-[24px] relative mb-[30px] z-[1]"
-                            dangerouslySetInnerHTML={{
-                                __html: dataDetailSpecialty?.contentHTML,
-                            }}
-                        ></div>
-                        <div className="absolute left-0 right-0 bottom-0 h-[40%] bg-[linear-gradient(rgba(255,255,255,0.1),rgba(255,255,255,0.9),white)]"></div>
-                        <div className="absolute z-[1] left-0 right-0 bottom-0 bg-white text-[#45C3D2]">
-                            <div className="max-w-[1200px] mx-auto">
-                                {!isShowDetail ? (
-                                    <span
-                                        className="py-[4px] inline-block leading-[22px] cursor-pointer"
-                                        onClick={() =>
-                                            this.setState({
-                                                isShowDetail: true,
-                                            })
-                                        }
-                                    >
-                                        Đọc thêm
-                                    </span>
-                                ) : (
-                                    <span
-                                        className="py-[4px] inline-block leading-[22px] cursor-pointer"
-                                        onClick={() =>
-                                            this.setState({
-                                                isShowDetail: false,
-                                            })
-                                        }
-                                    >
-                                        Ẩn bớt
-                                    </span>
-                                )}
+                        {isLoading ? (
+                            <div className="h-[300px] max-w-[1200px] mx-auto pt-[24px]">
+                                <Skeleton height={30} baseColor="#e8e8e8" />
+                                <Skeleton
+                                    className="mt-[10px]"
+                                    height={200}
+                                    baseColor="#e8e8e8"
+                                />
                             </div>
-                        </div>
-                    </div>
-                    <div className="bg-[#EEEEEE]">
-                        <div className="max-w-[1200px] mx-auto">
-                            <select
-                                onChange={this.handleOnChangeSelect}
-                                className="bg-white my-[10px] px-[16px] py-[6px] outline-none rounded-[4px] border-[1px] border-[#ced4da]"
-                            >
-                                {listProvince.map((item, index) => (
-                                    <option key={index} value={item.keyMap}>
-                                        {this.props.language === LANGUAGES.VI
-                                            ? item.valueVi
-                                            : item.valueEn}
-                                    </option>
-                                ))}
-                            </select>
+                        ) : (
+                            <div
+                                className="max-w-[1200px] mx-auto pt-[24px] relative mb-[30px] z-[1]"
+                                dangerouslySetInnerHTML={{
+                                    __html: dataDetailSpecialty?.contentHTML,
+                                }}
+                            ></div>
+                        )}
 
-                            {arrDoctorId &&
-                                arrDoctorId.length > 0 &&
-                                arrDoctorId.map((item, index) => (
-                                    <div
-                                        className="bg-white flex mb-[10px] shadow-[0_1px_6px_rgba(32,33,36,0.28)] rounded-[8px] p-[14px]"
-                                        key={index}
-                                    >
-                                        <div className="w-[50%] border-r-[1px] border-[#eee] flex items-start">
-                                            <ProfileDoctor
-                                                doctorId={item}
-                                                isShowDescDoctor={true}
-                                                isShowLinkDetail={true}
-                                                isShowPrice={false}
-                                                titleActive={true}
-                                            />
-                                        </div>
-                                        <div className="w-[50%]">
-                                            <div className="pl-[20px]">
-                                                <DoctorSchedule
-                                                    doctorId={item}
-                                                />
-                                            </div>
-                                            <DoctorExtraInfo doctorId={item} />
-                                        </div>
-                                    </div>
-                                ))}
+                        <div className="absolute left-0 right-0 bottom-0 h-[40%] bg-[linear-gradient(rgba(255,255,255,0.1),rgba(255,255,255,0.9),white)]"></div>
+                        {!isLoading && (
+                            <div className="absolute z-[1] left-0 right-0 bottom-0 bg-white text-[#45C3D2]">
+                                <div className="max-w-[1200px] mx-auto">
+                                    {!isShowDetail ? (
+                                        <span
+                                            className="py-[4px] inline-block leading-[22px] cursor-pointer"
+                                            onClick={() =>
+                                                this.setState({
+                                                    isShowDetail: true,
+                                                })
+                                            }
+                                        >
+                                            Đọc thêm
+                                        </span>
+                                    ) : (
+                                        <span
+                                            className="py-[4px] inline-block leading-[22px] cursor-pointer"
+                                            onClick={() =>
+                                                this.setState({
+                                                    isShowDetail: false,
+                                                })
+                                            }
+                                        >
+                                            Ẩn bớt
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    <div className="bg-[#EEEEEE] pb-[10px]">
+                        <div className="max-w-[1200px] mx-auto">
+                            {isLoading ? (
+                                <Skeleton
+                                    className="mt-[20px]"
+                                    height={30}
+                                    baseColor="#ccc"
+                                />
+                            ) : (
+                                <select
+                                    onChange={this.handleOnChangeSelect}
+                                    className="bg-white my-[10px] px-[16px] py-[6px] outline-none rounded-[4px] border-[1px] border-[#ced4da]"
+                                >
+                                    {listProvince.map((item, index) => (
+                                        <option key={index} value={item.keyMap}>
+                                            {this.props.language ===
+                                            LANGUAGES.VI
+                                                ? item.valueVi
+                                                : item.valueEn}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+
+                            {arrDoctorId && arrDoctorId.length > 0
+                                ? arrDoctorId.map((item, index) => (
+                                      <div
+                                          className={`bg-white flex ${
+                                              index !== arrDoctorId.length - 1
+                                                  ? "mb-[10px]"
+                                                  : ""
+                                          } shadow-[0_1px_6px_rgba(32,33,36,0.28)] rounded-[8px] p-[14px]`}
+                                          key={index}
+                                      >
+                                          <div className="w-[50%] border-r-[1px] border-[#eee] flex items-start">
+                                              <ProfileDoctor
+                                                  doctorId={item}
+                                                  isShowDescDoctor={true}
+                                                  isShowLinkDetail={true}
+                                                  isShowPrice={false}
+                                                  titleActive={true}
+                                              />
+                                          </div>
+                                          <div className="w-[50%]">
+                                              <div className="pl-[20px]">
+                                                  <DoctorSchedule
+                                                      doctorId={item}
+                                                  />
+                                              </div>
+                                              <DoctorExtraInfo
+                                                  doctorId={item}
+                                              />
+                                          </div>
+                                      </div>
+                                  ))
+                                : [1, 2, 3, 4, 5].map((_, index) => (
+                                      <div>
+                                          <Skeleton
+                                              className="mt-[20px]"
+                                              height={220}
+                                              baseColor="#ccc"
+                                          />
+                                      </div>
+                                  ))}
                         </div>
                     </div>
                 </div>

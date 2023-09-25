@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import * as actions from "../../../store/actions";
 import TableManageSpecialty from "./TableManageSpecialty";
 import { FormattedMessage } from "react-intl";
+import LoadingOverlay from "react-loading-overlay";
 
 const mdParser = new MarkdownIt();
 
@@ -21,6 +22,7 @@ class ManageSpecialty extends Component {
             name: "",
             imageBase64: "",
             isOpen: false,
+            isLoading: true,
             contentMarkdown: "",
             contentHTML: "",
             action: CRUD_ACTIONS.CREATE,
@@ -28,8 +30,11 @@ class ManageSpecialty extends Component {
         };
     }
 
-    componentDidMount() {
-        this.props.fetchAllSpecialty();
+    async componentDidMount() {
+        this.setState({
+            isLoading: true,
+        });
+        await this.props.fetchAllSpecialty();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -77,6 +82,10 @@ class ManageSpecialty extends Component {
         const { id, name, imageBase64, contentMarkdown, contentHTML, action } =
             this.state;
 
+        this.setState({
+            isLoading: true,
+        });
+
         if (action === CRUD_ACTIONS.CREATE) {
             await this.props.createNewSpecialty({
                 name,
@@ -91,6 +100,7 @@ class ManageSpecialty extends Component {
                 contentMarkdown: "",
                 contentHTML: "",
                 isOpen: false,
+                isLoading: false,
             });
         } else {
             await this.props.updateSpecialty({
@@ -109,6 +119,7 @@ class ManageSpecialty extends Component {
                 contentHTML: "",
                 isOpen: false,
                 action: CRUD_ACTIONS.CREATE,
+                isLoading: false,
             });
         }
     };
@@ -129,10 +140,10 @@ class ManageSpecialty extends Component {
     };
 
     render() {
-        const { isOpen, imageBase64, action } = this.state;
+        const { isOpen, imageBase64, action, isLoading } = this.state;
 
         return (
-            <div>
+            <LoadingOverlay active={isLoading} spinner text="Loading...">
                 <div className="font-semibold title text-center mb-[20px]">
                     <FormattedMessage id="admin.manage-specialty.title" />
                 </div>
@@ -220,9 +231,10 @@ class ManageSpecialty extends Component {
                     </button>
                     <TableManageSpecialty
                         handleEditFromParent={this.handleEditFromParent}
+                        parent={this}
                     />
                 </div>
-            </div>
+            </LoadingOverlay>
         );
     }
 }

@@ -8,22 +8,30 @@ import moment from "moment";
 import localization from "moment/locale/vi";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
 
 class ProfileDoctor extends Component {
     constructor(props) {
         super(props);
         this.state = {
             dataProfile: {},
+            isLoading: true,
         };
     }
 
     async componentDidMount() {
+        this.setState({
+            isLoading: true,
+        });
         const res = await getProfileDoctorById(this.props.doctorId);
         if (res.errCode === 0 && res.data) {
             this.setState({
                 dataProfile: res.data,
             });
         }
+        this.setState({
+            isLoading: false,
+        });
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -31,12 +39,18 @@ class ProfileDoctor extends Component {
             prevProps.language !== this.props.language ||
             prevProps.doctorId !== this.props.doctorId
         ) {
+            this.setState({
+                isLoading: true,
+            });
             const res = await getProfileDoctorById(this.props.doctorId);
             if (res.errCode === 0 && res.data) {
                 this.setState({
                     dataProfile: res.data,
                 });
             }
+            this.setState({
+                isLoading: false,
+            });
         }
     }
 
@@ -84,7 +98,7 @@ class ProfileDoctor extends Component {
             isShowLinkDetail,
             isShowPrice,
         } = this.props;
-        let { dataProfile } = this.state;
+        let { dataProfile, isLoading } = this.state;
         let nameVi = "",
             nameEn = "";
         if (dataProfile?.positionData) {
@@ -95,10 +109,15 @@ class ProfileDoctor extends Component {
         return (
             <div>
                 <div className="max-w-[1200px] mx-auto py-[14px] flex items-center">
-                    <img
-                        className="w-[100px] h-[100px] rounded-full object-cover"
-                        src={dataProfile?.image || defaultAvatar}
-                    />
+                    {isLoading ? (
+                        <Skeleton circle width={100} height={100} />
+                    ) : (
+                        <img
+                            className="w-[100px] h-[100px] rounded-full object-cover"
+                            src={dataProfile?.image || defaultAvatar}
+                        />
+                    )}
+
                     <div className="ml-[16px]">
                         <h1
                             className={`${

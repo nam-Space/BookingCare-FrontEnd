@@ -20,7 +20,11 @@ class TableManageUser extends Component {
     }
 
     async componentDidMount() {
-        this.props.fetchUserRedux();
+        await this.props.fetchUserRedux();
+
+        this.props?.parent.setState({
+            isLoading: false,
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -31,13 +35,23 @@ class TableManageUser extends Component {
         }
     }
 
-    handleDeleteUser = (user) => {
-        this.props.deleteUserRedux(user.id);
+    handleDeleteUser = async (user) => {
+        this.props?.parent.setState({
+            isLoading: true,
+        });
+        await this.props.deleteUserRedux(user.id);
+        await this.props.fetchUserRedux();
+        this.props?.parent.setState({
+            isLoading: false,
+        });
     };
 
     handleEditUser = (user) => {
-        const mainContainer = document.querySelector(".main-container");
-        mainContainer.scrollIntoView({ behavior: "smooth" });
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
         this.props.handleEditFromParentKey(user);
     };
 

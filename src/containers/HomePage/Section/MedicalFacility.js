@@ -6,6 +6,7 @@ import SwiperCore, { Navigation } from "swiper";
 import * as actions from "../../../store/actions";
 import { withRouter } from "react-router";
 import { FormattedMessage } from "react-intl";
+import Skeleton from "react-loading-skeleton";
 
 SwiperCore.use([Navigation]);
 class MedicalFacility extends Component {
@@ -50,35 +51,44 @@ class MedicalFacility extends Component {
                         navigation={true}
                         modules={[Navigation]}
                     >
-                        {this.state.dataClinic.length > 0 &&
-                            this.state.dataClinic.map((item, index) => {
-                                let avatarBase64 = "";
-                                if (item.avatar) {
-                                    avatarBase64 = new Buffer(
-                                        item.avatar,
-                                        "base64"
-                                    ).toString("binary");
-                                }
+                        {this.state.dataClinic.length > 0
+                            ? this.state.dataClinic.map((item, index) => {
+                                  let avatarBase64 = "";
+                                  if (item.avatar) {
+                                      avatarBase64 = new Buffer(
+                                          item.avatar,
+                                          "base64"
+                                      ).toString("binary");
+                                  }
 
-                                return (
-                                    <SwiperSlide
-                                        key={index}
-                                        onClick={() =>
-                                            this.handleViewDetailClinic(item)
-                                        }
-                                    >
-                                        <div className="flex justify-center items-center">
-                                            <img
-                                                src={avatarBase64}
-                                                className="h-[192px] object-cover"
-                                            />
-                                        </div>
-                                        <p className="leading-[18px] text-[14px] mt-[8px]">
-                                            {item.name}
-                                        </p>
-                                    </SwiperSlide>
-                                );
-                            })}
+                                  return (
+                                      <SwiperSlide
+                                          key={index}
+                                          onClick={() =>
+                                              this.handleViewDetailClinic(item)
+                                          }
+                                      >
+                                          <div className="flex justify-center items-center">
+                                              <img
+                                                  src={avatarBase64}
+                                                  className="h-[192px] object-cover"
+                                              />
+                                          </div>
+                                          <p className="leading-[18px] text-[14px] mt-[8px]">
+                                              {item.name}
+                                          </p>
+                                      </SwiperSlide>
+                                  );
+                              })
+                            : [1, 2, 3, 4].map((_, index) => (
+                                  <SwiperSlide key={index}>
+                                      <Skeleton
+                                          height={192}
+                                          borderRadius={10}
+                                          baseColor="#e8e8e8"
+                                      />
+                                  </SwiperSlide>
+                              ))}
                     </Swiper>
                 </div>
             </div>

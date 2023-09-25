@@ -10,6 +10,8 @@ import "react-image-lightbox/style.css";
 
 import "react-markdown-editor-lite/lib/index.css";
 
+import "react-loading-skeleton/dist/skeleton.css";
+
 import App from "./containers/App";
 import * as serviceWorker from "./serviceWorker";
 import IntlProviderWrapper from "./hoc/IntlProviderWrapper";
@@ -22,9 +24,9 @@ const renderApp = () => {
     ReactDOM.render(
         <Provider store={reduxStore}>
             <IntlProviderWrapper>
-                <CustomScrollbars style={{ width: "100%", height: "100vh" }}>
-                    <App persistor={persistor} />
-                </CustomScrollbars>
+                {/* <CustomScrollbars style={{ width: "100%", height: "100vh" }}> */}
+                <App persistor={persistor} />
+                {/* </CustomScrollbars> */}
             </IntlProviderWrapper>
         </Provider>,
         document.getElementById("root")

@@ -7,6 +7,7 @@ import * as actions from "../../../store/actions";
 import Lightbox from "react-image-lightbox";
 import TableManageHandbook from "./TableManageHandbook";
 import { FormattedMessage } from "react-intl";
+import LoadingOverlay from "react-loading-overlay";
 
 const mdParser = new MarkdownIt();
 
@@ -19,6 +20,7 @@ class ManageHandbook extends Component {
             imageBase64: "",
             caption: "",
             isOpen: false,
+            isLoading: true,
             contentMarkdown: "",
             contentHTML: "",
             action: CRUD_ACTIONS.CREATE,
@@ -26,8 +28,11 @@ class ManageHandbook extends Component {
         };
     }
 
-    componentDidMount() {
-        this.props.fetchAllHandbook();
+    async componentDidMount() {
+        this.setState({
+            isLoading: true,
+        });
+        await this.props.fetchAllHandbook();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -82,6 +87,10 @@ class ManageHandbook extends Component {
             action,
         } = this.state;
 
+        this.setState({
+            isLoading: true,
+        });
+
         if (action === CRUD_ACTIONS.CREATE) {
             await this.props.createNewHandbook({
                 name,
@@ -98,6 +107,7 @@ class ManageHandbook extends Component {
                 contentMarkdown: "",
                 contentHTML: "",
                 isOpen: false,
+                isLoading: false,
             });
         } else {
             await this.props.updateHandbook({
@@ -117,6 +127,7 @@ class ManageHandbook extends Component {
                 contentMarkdown: "",
                 contentHTML: "",
                 isOpen: false,
+                isLoading: false,
                 action: CRUD_ACTIONS.CREATE,
             });
         }
@@ -139,10 +150,10 @@ class ManageHandbook extends Component {
     };
 
     render() {
-        const { imageBase64, caption, isOpen, action } = this.state;
+        const { imageBase64, caption, isOpen, isLoading, action } = this.state;
 
         return (
-            <div>
+            <LoadingOverlay active={isLoading} spinner text="Loading...">
                 <div className="font-semibold title text-center mb-[20px]">
                     <FormattedMessage id="admin.manage-handbook.title" />
                 </div>
@@ -243,9 +254,10 @@ class ManageHandbook extends Component {
                     </button>
                     <TableManageHandbook
                         handleEditFromParent={this.handleEditFromParent}
+                        parent={this}
                     />
                 </div>
-            </div>
+            </LoadingOverlay>
         );
     }
 }

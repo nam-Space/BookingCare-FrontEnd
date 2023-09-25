@@ -10,16 +10,26 @@ import DoctorExtraInfo from "./DoctorExtraInfo";
 import HomeFooter from "../../HomePage/HomeFooter";
 import LikeAndShare from "../SocialPlugin/LikeAndShare";
 import Comment from "../SocialPlugin/Comment";
+import Skeleton from "react-loading-skeleton";
 
 class DetailDoctor extends Component {
     constructor(props) {
         super(props);
         this.state = {
             detailDoctor: {},
+            isLoading: true,
         };
     }
 
     async componentDidMount() {
+        window.scroll({
+            top: 0,
+            left: 0,
+        });
+
+        this.setState({
+            isLoading: true,
+        });
         if (
             this.props.match &&
             this.props.match.params &&
@@ -31,13 +41,16 @@ class DetailDoctor extends Component {
                 this.setState({ detailDoctor: res.data });
             }
         }
+        this.setState({
+            isLoading: false,
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {}
 
     render() {
         let { language } = this.props;
-        let { detailDoctor } = this.state;
+        let { detailDoctor, isLoading } = this.state;
         let nameVi = "",
             nameEn = "";
         if (detailDoctor?.positionData) {
@@ -55,40 +68,90 @@ class DetailDoctor extends Component {
                 <HomeHeader isShowBanner={false} />
                 <div className="mt-[78px]">
                     <div className="max-w-[1200px] mx-auto py-[30px] flex items-center">
-                        <img
-                            className="w-[120px] h-[120px] rounded-full object-cover"
-                            src={detailDoctor?.image || defaultAvatar}
-                        />
+                        {isLoading ? (
+                            <Skeleton circle width={120} height={120} />
+                        ) : (
+                            <img
+                                className="w-[120px] h-[120px] rounded-full object-cover"
+                                src={detailDoctor?.image || defaultAvatar}
+                            />
+                        )}
+
                         <div className="ml-[16px]">
-                            <h1 className="text-[28px] font-bold">
-                                {language === LANGUAGES.VI ? nameVi : nameEn}
-                            </h1>
-                            <p>{detailDoctor?.Markdown?.description}</p>
-                            <div className="mt-[10px]">
-                                <LikeAndShare dataHref={currentUrl} />
-                            </div>
+                            {isLoading ? (
+                                <Skeleton height={30} />
+                            ) : (
+                                <h1 className="text-[28px] font-bold">
+                                    {language === LANGUAGES.VI
+                                        ? nameVi
+                                        : nameEn}
+                                </h1>
+                            )}
+
+                            {isLoading ? (
+                                <Skeleton height={50} width={800} />
+                            ) : (
+                                <>
+                                    <p>{detailDoctor?.Markdown?.description}</p>
+                                    <div className="mt-[10px]">
+                                        <LikeAndShare dataHref={currentUrl} />
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
                     <div className="flex max-w-[1200px] mx-auto pb-[22px]">
                         <div className="w-[50%]">
-                            <DoctorSchedule
-                                doctorId={this.props?.match?.params?.id}
-                            />
+                            {isLoading ? (
+                                <Skeleton height={144} width="95%" />
+                            ) : (
+                                <DoctorSchedule
+                                    doctorId={this.props?.match?.params?.id}
+                                />
+                            )}
                         </div>
                         <div className="w-[50%] border-l-[1px] border-[#eee]">
-                            <DoctorExtraInfo
-                                doctorId={this.props?.match?.params?.id}
-                            />
+                            {isLoading ? (
+                                <Skeleton height={144} width="95%" />
+                            ) : (
+                                <DoctorExtraInfo
+                                    doctorId={this.props?.match?.params?.id}
+                                />
+                            )}
                         </div>
                     </div>
                     <div className="bg-[#F9F9F9] py-[30px]">
                         <div className="max-w-[1200px] mx-auto">
-                            <div
-                                className="detail-doctor-container"
-                                dangerouslySetInnerHTML={{
-                                    __html: detailDoctor?.Markdown?.contentHTML,
-                                }}
-                            ></div>
+                            {isLoading ? (
+                                <div>
+                                    {[1, 2, 3, 4, 5].map((_, index) => (
+                                        <div key={index}>
+                                            <Skeleton
+                                                height={30}
+                                                baseColor="#ccc"
+                                                className={`${
+                                                    index !== 0
+                                                        ? "mt-[40px]"
+                                                        : ""
+                                                }`}
+                                            />
+                                            <Skeleton
+                                                className="mt-[10px]"
+                                                height={64}
+                                                baseColor="#ccc"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div
+                                    className="detail-doctor-container"
+                                    dangerouslySetInnerHTML={{
+                                        __html: detailDoctor?.Markdown
+                                            ?.contentHTML,
+                                    }}
+                                ></div>
+                            )}
                         </div>
                         <div className="max-w-[1200px] mx-auto mt-[30px]">
                             <Comment dataHref={currentUrl} width="100%" />

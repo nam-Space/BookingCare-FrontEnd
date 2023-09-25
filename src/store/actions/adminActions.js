@@ -102,7 +102,6 @@ export const createNewUser = (data) => {
             let res = await createNewUserService(data);
             if (res && res.errCode === 0) {
                 dispatch(saveUserSuccess());
-                dispatch(fetchAllUsersStart());
                 toast.success("Tạo mới người dùng thành công!");
             } else {
                 dispatch(saveUserFailed());
@@ -129,7 +128,6 @@ export const deleteUser = (userId) => {
             let res = await deleteUserService(userId);
             if (res && res.errCode === 0) {
                 dispatch(deleteUserSuccess());
-                dispatch(fetchAllUsersStart());
                 toast.success("Xóa người dùng thành công!");
             } else {
                 dispatch(deleteUserFailed());
@@ -155,7 +153,6 @@ export const editUser = (data) => {
             let res = await editUserService(data);
             if (res && res.errCode === 0) {
                 dispatch(editUserSuccess());
-                dispatch(fetchAllUsersStart());
                 toast.success("Sửa người dùng thành công!");
             } else {
                 dispatch(editUserFailed());

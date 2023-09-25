@@ -9,6 +9,7 @@ import { LANGUAGES } from "../../../utils/constant";
 import imgDefault from "../../../assets/images/imgDefault.png";
 import { FormattedMessage } from "react-intl";
 import { withRouter } from "react-router";
+import Skeleton from "react-loading-skeleton";
 
 class OutStandingDoctor extends Component {
     constructor(props) {
@@ -56,42 +57,54 @@ class OutStandingDoctor extends Component {
                         navigation={true}
                         modules={[Navigation]}
                     >
-                        {arrDoctors.map((item, index) => {
-                            let imageBase64 = "";
-                            if (item.image) {
-                                imageBase64 = new Buffer(
-                                    item.image,
-                                    "base64"
-                                ).toString("binary");
-                            }
+                        {arrDoctors && arrDoctors.length > 0
+                            ? arrDoctors.map((item, index) => {
+                                  let imageBase64 = "";
+                                  if (item.image) {
+                                      imageBase64 = new Buffer(
+                                          item.image,
+                                          "base64"
+                                      ).toString("binary");
+                                  }
 
-                            let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`;
-                            let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`;
+                                  let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`;
+                                  let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`;
 
-                            return (
-                                <SwiperSlide
-                                    key={index}
-                                    onClick={() =>
-                                        this.handleViewDetailDoctor(item)
-                                    }
-                                >
-                                    <div className="flex flex-col justify-center items-center bg-white py-[10px]">
-                                        <img
-                                            src={imageBase64 || imgDefault}
-                                            className="rounded-full h-[120px] w-[120px] object-cover"
-                                        />
-                                        <p className="leading-[18px] text-[14px] mt-[12px]">
-                                            {language === LANGUAGES.VI
-                                                ? nameVi
-                                                : nameEn}
-                                        </p>
-                                        <p className="leading-[18px] text-[12px] mt-[4px]">
-                                            {item.lastName}
-                                        </p>
-                                    </div>
-                                </SwiperSlide>
-                            );
-                        })}
+                                  return (
+                                      <SwiperSlide
+                                          key={index}
+                                          onClick={() =>
+                                              this.handleViewDetailDoctor(item)
+                                          }
+                                      >
+                                          <div className="flex flex-col justify-center items-center bg-white py-[10px]">
+                                              <img
+                                                  src={
+                                                      imageBase64 || imgDefault
+                                                  }
+                                                  className="rounded-full h-[120px] w-[120px] object-cover"
+                                              />
+                                              <p className="leading-[18px] text-[14px] mt-[12px]">
+                                                  {language === LANGUAGES.VI
+                                                      ? nameVi
+                                                      : nameEn}
+                                              </p>
+                                              <p className="leading-[18px] text-[12px] mt-[4px]">
+                                                  {item.lastName}
+                                              </p>
+                                          </div>
+                                      </SwiperSlide>
+                                  );
+                              })
+                            : [1, 2, 3, 4].map((_, index) => (
+                                  <SwiperSlide key={index}>
+                                      <Skeleton
+                                          height={192}
+                                          borderRadius={10}
+                                          baseColor="#e8e8e8"
+                                      />
+                                  </SwiperSlide>
+                              ))}
                     </Swiper>
                 </div>
             </div>

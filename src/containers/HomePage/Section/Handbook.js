@@ -6,6 +6,7 @@ import SwiperCore, { Navigation } from "swiper";
 import * as actions from "../../../store/actions";
 import { withRouter } from "react-router";
 import { FormattedMessage } from "react-intl";
+import Skeleton from "react-loading-skeleton";
 
 SwiperCore.use([Navigation]);
 class Handbook extends Component {
@@ -50,35 +51,46 @@ class Handbook extends Component {
                         navigation={true}
                         modules={[Navigation]}
                     >
-                        {this.state.dataHandbook.length > 0 &&
-                            this.state.dataHandbook.map((item, index) => {
-                                let imageBase64 = "";
-                                if (item.image) {
-                                    imageBase64 = new Buffer(
-                                        item.image,
-                                        "base64"
-                                    ).toString("binary");
-                                }
+                        {this.state.dataHandbook.length > 0
+                            ? this.state.dataHandbook.map((item, index) => {
+                                  let imageBase64 = "";
+                                  if (item.image) {
+                                      imageBase64 = new Buffer(
+                                          item.image,
+                                          "base64"
+                                      ).toString("binary");
+                                  }
 
-                                return (
-                                    <SwiperSlide
-                                        key={index}
-                                        onClick={() =>
-                                            this.handleViewDetailHandbook(item)
-                                        }
-                                    >
-                                        <div className="grid grid-cols-2 gap-[10px] py-[10px]">
-                                            <img
-                                                src={imageBase64}
-                                                className="mr-[10px] h-[192px] object-cover"
-                                            />
-                                            <p className="font-bold text-[16px] mt-[12px]">
-                                                {item.name}
-                                            </p>
-                                        </div>
-                                    </SwiperSlide>
-                                );
-                            })}
+                                  return (
+                                      <SwiperSlide
+                                          key={index}
+                                          onClick={() =>
+                                              this.handleViewDetailHandbook(
+                                                  item
+                                              )
+                                          }
+                                      >
+                                          <div className="grid grid-cols-2 gap-[10px] py-[10px]">
+                                              <img
+                                                  src={imageBase64}
+                                                  className="mr-[10px] h-[192px] object-cover"
+                                              />
+                                              <p className="font-bold text-[16px] mt-[12px]">
+                                                  {item.name}
+                                              </p>
+                                          </div>
+                                      </SwiperSlide>
+                                  );
+                              })
+                            : [1, 2].map((_, index) => (
+                                  <SwiperSlide key={index}>
+                                      <Skeleton
+                                          height={192}
+                                          borderRadius={10}
+                                          baseColor="#e8e8e8"
+                                      />
+                                  </SwiperSlide>
+                              ))}
                     </Swiper>
                 </div>
             </div>

@@ -12,7 +12,10 @@ class TableManageClinic extends Component {
     }
 
     async componentDidMount() {
-        this.props.fetchAllClinic();
+        await this.props.fetchAllClinic();
+        this.props?.parent.setState({
+            isLoading: false,
+        });
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -24,14 +27,23 @@ class TableManageClinic extends Component {
     }
 
     handleEditClinic = (item) => {
-        const mainContainer = document.querySelector(".main-container");
-        mainContainer.scrollIntoView({ behavior: "smooth" });
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
         this.props.handleEditFromParent(item);
     };
 
     handleDeleteClinic = async (item) => {
+        this.props?.parent.setState({
+            isLoading: true,
+        });
         await this.props.deleteClinic(item.id);
         await this.props.fetchAllClinic();
+        this.props?.parent.setState({
+            isLoading: false,
+        });
     };
 
     render() {

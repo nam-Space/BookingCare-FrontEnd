@@ -8,6 +8,7 @@ import * as actions from "../../../store/actions";
 import { FormattedMessage } from "react-intl";
 
 import { withRouter } from "react-router";
+import Skeleton from "react-loading-skeleton";
 
 SwiperCore.use([Navigation]);
 class Specialty extends Component {
@@ -53,34 +54,45 @@ class Specialty extends Component {
                         modules={[Navigation]}
                     >
                         {this.state.dataSpecialty &&
-                            this.state.dataSpecialty.length > 0 &&
-                            this.state.dataSpecialty.map((item, index) => {
-                                let imageBase64 = "";
-                                if (item.image) {
-                                    imageBase64 = new Buffer(
-                                        item.image,
-                                        "base64"
-                                    ).toString("binary");
-                                }
+                        this.state.dataSpecialty.length > 0
+                            ? this.state.dataSpecialty.map((item, index) => {
+                                  let imageBase64 = "";
+                                  if (item.image) {
+                                      imageBase64 = new Buffer(
+                                          item.image,
+                                          "base64"
+                                      ).toString("binary");
+                                  }
 
-                                return (
-                                    <SwiperSlide
-                                        key={index}
-                                        onClick={() =>
-                                            this.handleViewDetailSpecialty(item)
-                                        }
-                                    >
-                                        <img
-                                            src={imageBase64}
-                                            alt={item.name}
-                                            className="w-full h-[192px] object-cover"
-                                        />
-                                        <p className="leading-[18px] text-[14px] mt-[8px]">
-                                            {item.name}
-                                        </p>
-                                    </SwiperSlide>
-                                );
-                            })}
+                                  return (
+                                      <SwiperSlide
+                                          key={index}
+                                          onClick={() =>
+                                              this.handleViewDetailSpecialty(
+                                                  item
+                                              )
+                                          }
+                                      >
+                                          <img
+                                              src={imageBase64}
+                                              alt={item.name}
+                                              className="w-full h-[192px] object-cover"
+                                          />
+                                          <p className="leading-[18px] text-[14px] mt-[8px]">
+                                              {item.name}
+                                          </p>
+                                      </SwiperSlide>
+                                  );
+                              })
+                            : [1, 2, 3, 4].map((_, index) => (
+                                  <SwiperSlide key={index}>
+                                      <Skeleton
+                                          height={192}
+                                          borderRadius={10}
+                                          baseColor="#e8e8e8"
+                                      />
+                                  </SwiperSlide>
+                              ))}
                     </Swiper>
                 </div>
             </div>
