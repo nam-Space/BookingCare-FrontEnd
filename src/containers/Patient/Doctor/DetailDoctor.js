@@ -145,7 +145,7 @@ class DetailDoctor extends Component {
                                 </div>
                             ) : (
                                 <div
-                                    className="detail-doctor-container"
+                                    id="detail-doctor-container"
                                     dangerouslySetInnerHTML={{
                                         __html: detailDoctor?.Markdown
                                             ?.contentHTML,

@@ -120,6 +120,7 @@ class DetailHandbook extends Component {
                             </div>
                         ) : (
                             <div
+                                id="detail-handbook-container"
                                 className="max-w-[1200px] mx-auto"
                                 dangerouslySetInnerHTML={{
                                     __html: dataDetailHandbook?.contentHTML,

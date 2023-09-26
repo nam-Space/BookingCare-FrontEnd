@@ -156,6 +156,7 @@ class DetailSpecialty extends Component {
                             </div>
                         ) : (
                             <div
+                                id="detail-specialty-container"
                                 className="max-w-[1200px] mx-auto pt-[24px] relative mb-[30px] z-[1]"
                                 dangerouslySetInnerHTML={{
                                     __html: dataDetailSpecialty?.contentHTML,
