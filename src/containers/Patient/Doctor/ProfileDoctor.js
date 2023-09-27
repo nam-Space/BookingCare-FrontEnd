@@ -118,7 +118,7 @@ class ProfileDoctor extends Component {
                             className="text-[#45C3D2]"
                         >
                             <img
-                                className="w-full max-w-[100px] h-[100px] rounded-full object-cover"
+                                className="w-[100px] h-[100px] rounded-full object-cover"
                                 src={dataProfile?.image || defaultAvatar}
                             />
                         </Link>
