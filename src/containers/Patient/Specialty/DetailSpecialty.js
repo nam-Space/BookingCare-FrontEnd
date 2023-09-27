@@ -86,6 +86,9 @@ class DetailSpecialty extends Component {
     async componentDidUpdate(prevProps, prevState, snapshot) {}
 
     handleOnChangeSelect = async (e) => {
+        this.setState({
+            isLoading: true,
+        });
         if (
             this.props.match &&
             this.props.match.params &&
@@ -114,6 +117,9 @@ class DetailSpecialty extends Component {
                 });
             }
         }
+        this.setState({
+            isLoading: false,
+        });
     };
 
     render() {
@@ -219,8 +225,9 @@ class DetailSpecialty extends Component {
                                 </select>
                             )}
 
-                            {arrDoctorId && arrDoctorId.length > 0
-                                ? arrDoctorId.map((item, index) => (
+                            {isLoading
+                                ? arrDoctorId.length > 0 &&
+                                  arrDoctorId.map((item, index) => (
                                       <div
                                           className={`bg-white flex ${
                                               index !== arrDoctorId.length - 1
