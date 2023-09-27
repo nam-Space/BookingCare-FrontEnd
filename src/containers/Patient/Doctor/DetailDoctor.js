@@ -72,7 +72,7 @@ class DetailDoctor extends Component {
                             <Skeleton circle width={120} height={120} />
                         ) : (
                             <img
-                                className="w-[120px] h-[120px] rounded-full object-cover"
+                                className="w-full max-w-[120px] h-[120px] rounded-full object-cover"
                                 src={detailDoctor?.image || defaultAvatar}
                             />
                         )}
